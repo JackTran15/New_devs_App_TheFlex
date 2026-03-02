@@ -20,13 +20,6 @@ security = HTTPBearer(auto_error=False)
 auth_cache = {}
 CACHE_DURATION = 1800  # 30 minutes (increased from 5 minutes for better performance)
 
-
-def clear_auth_cache():
-    """Clear authentication cache"""
-    global auth_cache
-    auth_cache = {}
-
-
 def invalidate_user_cache(user_id: str):
     """Invalidate all cached authentication entries for a specific user
 
