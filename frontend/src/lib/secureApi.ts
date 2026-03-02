@@ -74,7 +74,7 @@ export class SecureAPIClient {
   private interceptDirectQueries() {
     if (import.meta.env.DEV) {
       const ENFORCE = (import.meta.env as any).VITE_ENFORCE_SECURE_API === 'true';
-      const originalFrom = supabase.from;
+      const originalFrom = (supabase as any).from;
       // Temporary dev allowlist for legacy direct queries while migrating to SecureAPI
       const DEV_ALLOWLIST = new Set([
         'user_permissions',
@@ -84,7 +84,7 @@ export class SecureAPIClient {
         'landlord_details'
       ]);
 
-      supabase.from = (table: string) => {
+      (supabase as any).from = (table: string) => {
         const stack = new Error().stack || '';
         const violation = `SECURITY VIOLATION: Direct Supabase query to table '${table}'`;
 
