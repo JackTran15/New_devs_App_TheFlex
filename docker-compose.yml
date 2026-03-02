@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend:
     build:
@@ -8,7 +6,11 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/propertyflow
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=propertyflow
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
       - REDIS_URL=redis://redis:6379/0
       - SECRET_KEY=debug_challenge_secret
     depends_on:

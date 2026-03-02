@@ -9,7 +9,11 @@ logger = logging.getLogger(__name__)
 
 class Settings(BaseSettings):
     # Core settings
-    database_url: str = "postgresql://postgres:postgres@db:5432/propertyflow"
+    db_host: str = "db"
+    db_port: int = 5432
+    db_name: str = "propertyflow"
+    db_username: str = "postgres"
+    db_password: str = "postgres"
     redis_url: str = "redis://redis:6379/0"
     secret_key: str = "debug_challenge_secret"
     
@@ -24,6 +28,13 @@ class Settings(BaseSettings):
     
     # ... allow extra fields just in case
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+    @property
+    def database_url(self) -> str:
+        return (
+            f"postgresql://{self.db_username}:{self.db_password}"
+            f"@{self.db_host}:{self.db_port}/{self.db_name}"
+        )
     
     def __init__(self, **kwargs):
         """Initialize settings with debug logging"""
